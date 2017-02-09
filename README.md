@@ -1,6 +1,6 @@
 # Introduction
 
-This project provides a demo application written by Dasudian DataHub C SDK for Embedded device. It can be run on uCOSII.
+This project provides a demo application written by Dasudian DataHub C SDK for Embedded device. It should be run on uCOSII.
 
 This document introduces the structure of current directory, how to compile and run demo and ask for help. If you want to know the details of APIs, please read file *docs/API.md* or header file *lib/DataHubClient.h*.
 

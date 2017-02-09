@@ -53,7 +53,7 @@ typedef struct datahub_client {
 	datahub_options *options;
 	datahub_connect_status status;
 	// MQTT lib
-	Network n;
+	Network *n;
 	Client c;
 	void *message_group[DATAHUB_QUEUE_SIZE];
 	OS_EVENT *message_queue;
@@ -64,7 +64,7 @@ typedef struct datahub_client {
 int datahub_create(datahub_client *client, char *instance_id, char *instance_key, 
 					char *user_name, char *client_id, datahub_options *options);
 // connect datahub server
-int datahub_connect(datahub_client *client);
+int datahub_connect(datahub_client *client, Network *n);
 // get sdk current connect status
 datahub_connect_status datahub_isconnected(datahub_client *client);
 int datahub_publish(datahub_client *client, char *topic, datahub_message *msg);

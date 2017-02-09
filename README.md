@@ -50,7 +50,7 @@ This directory contains all the files to build demo application. It is based on 
 
 Compiler: keil 5.22
 
-Environment: windows 7 x64 Home Basic
+Environment: uCOSII
 
 In-circuit debugger and programmer: ST-Link
 

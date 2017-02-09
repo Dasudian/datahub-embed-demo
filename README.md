@@ -50,12 +50,21 @@ This directory contains all the files to build demo application. It is based on 
 
 Compiler: keil 5.22
 
-Environment: uCOSII
+Environment: windows 7 x64 Home Basic
 
 In-circuit debugger and programmer: ST-Link
 
-Board: STM32F4 EXPLORER from ALIENTEK
+Board: STM32F4 EXPLORER from ALIENTEK, running uCOSII
 
 use keil to open ucosII/USER/Template.uvprojx, build, and then download. It should work, otherwise see Q&A for help.
+
+## How to develop your own application
+
+1. Transplant uCOSII to your board successfully. It is the basic step.
+
+2. Implement APIs defined in file lib/DatahubNetwork.h, including NewNetwork(), ConnectNetwork(), ucos_read(), ucos_write(), ucos_disconnect(). These APIs are used to connect internet/Internet. Without them, compilation will occur errors.(Demo implements these APIs in file ucosII/LWIP_APP/datahub_demo/datahub_demo.c)
+
+3. Use APIs defined in file lib/DataHubClient.h to connect and send data to IoT DataHub of Dasudian.(Demo connects and sends data to IoT DataHub of Dasudian in file ucosII/LWIP_APP/datahub_demo/datahub_demo.c as well)
+4. Build and download, your application should work on your own board.
 
 ## Q&A

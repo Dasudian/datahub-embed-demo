@@ -2,7 +2,7 @@
 
 This project provides a demo application written by Dasudian DataHub C SDK for Embedded device.
 
-This document introduces the structure of current directory, how to compile and run demo and Q&A for help. If you want to know the details of APIs, please read file *docs/API.md* or header file *lib/DataHubClient.h*.
+This document introduces the structure of current directory, how to compile and run demo and ask for help. If you want to know the details of APIs, please read file *docs/API.md* or header file *lib/DataHubClient.h*.
 
 ## Directory Introduction
 
@@ -34,9 +34,9 @@ This directory contains all the files to build demo application. It is based on 
 
 *ucosII/LWIP* contains source and header files of LWIP.
 
-**ucosII/LWIP_APP/lwip_comm/** contains drivers of ethernet.
+*ucosII/LWIP_APP/lwip_comm/* contains drivers of ethernet.
 
-*ucosII/LWIP_APP/datahub_demo/* contains the most important codes of this demo, which calls DATAHUB APIs to send data.
+**ucosII/LWIP_APP/datahub_demo/** contains the most important codes of this demo, which calls DATAHUB APIs to send data.
 
 *ucosII/MALLOC* implements a memory pool.
 

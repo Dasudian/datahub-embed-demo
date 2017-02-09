@@ -5,7 +5,6 @@
 #include "key.h"
 #include "lwip_comm.h"
 #include "LAN8720.h"
-#include "usmart.h"
 #include "timer.h"
 #include "lcd.h"
 #include "sram.h"
@@ -16,6 +15,7 @@
 #include "datahub_demo.h"
 
 //LED任务
+
 //任务优先级
 #define LED_TASK_PRIO		9
 //任务堆栈大小
@@ -78,7 +78,6 @@ int main(void)
 	delay_init(168);       	//延时初始化
 	NVIC_PriorityGroupConfig(NVIC_PriorityGroup_2);	//中断分组配置
 	uart_init(115200);    	//串口波特率设置
-	usmart_dev.init(84); 	//初始化USMART
 	LED_Init();  			//LED初始化
 	KEY_Init();  			//按键初始化
 	LCD_Init();  			//LCD初始化
@@ -107,14 +106,21 @@ int main(void)
 		delay_ms(500);
 	}
 	LCD_ShowString(30,130,200,20,16,"Lwip Init Success!"); 		//lwip初始化成功
+//	while(tcp_client_init()) 									//初始化tcp_client(创建tcp_client线程)
+//	{
+//		LCD_ShowString(30,150,200,20,16,"TCP Client failed!!"); //tcp客户端创建失败
+//		delay_ms(500);
+//		LCD_Fill(30,150,230,170,WHITE);
+//		delay_ms(500);
+//	}
 	while (create_datahub_task()) {
-		LCD_ShowString(30,150,200,20,16,"create_datahub_task failed!!");
+		LCD_ShowString(30,150,200,20,16,"mqtt_client_init failed!!");
 		delay_ms(500);
 		LCD_Fill(30,150,230,170,WHITE);
 		delay_ms(500);
 	}
 	
-	LCD_ShowString(30,150,200,20,16,"create_datahub_task Success!"); 	//tcp客户端创建成功
+	LCD_ShowString(30,150,200,20,16,"TCP Client Success!"); 	//tcp客户端创建成功
 	OSTaskCreate(start_task,(void*)0,(OS_STK*)&START_TASK_STK[START_STK_SIZE-1],START_TASK_PRIO);
 	OSStart(); //开启UCOS
 }

@@ -5,6 +5,9 @@
 #ifndef DATAHUB_DEMO_H
 #define DATAHUB_DEMO_H
 #include "includes.h"
+struct self_s {
+    int socket;
+};
 
 INT8U create_datahub_task(void);
 	

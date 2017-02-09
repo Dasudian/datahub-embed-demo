@@ -7,7 +7,7 @@ This demo uses `Keil` as a development tool.
 ### UCOSII目录
 该目录下是一个基于UCOSII和LWIP1.4.1编写的demo程序。
 
-[示例程序](./ucosII/LWIP/lwip_app/datahub_demo/datahub_demo.c)
+[示例程序](./ucosII/LWIP_APP/datahub_demo/datahub_demo.c)
 
 ### lib目录
 该目录下有最新的SDK库和头文件。

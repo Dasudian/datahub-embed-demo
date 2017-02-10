@@ -18,7 +18,8 @@
 #define __MQTT_CLIENT_C_
 
 #include "MQTTPacket.h"
-#include "MQTTUcos.h" //Platform specific implementation header file
+#include "DatahubNetwork.h"
+#include "DatahubTimer.h"
 
 #define MAX_PACKET_ID 65535
 #define MAX_MESSAGE_HANDLERS 1

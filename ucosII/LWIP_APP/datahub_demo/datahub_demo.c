@@ -14,9 +14,7 @@
 #include "lwip/api.h"
 #endif
 
-#if defined(DATAHUB_DEMO)
 int errno;
-#endif
 
 void NewNetwork(Network* n, void *data)
 {
@@ -75,7 +73,6 @@ int ConnectNetwork(Network* n, char* addr, int port)
 
     return rc;
 #endif
-		return 0;
 }
 /**
 读取多少个字节的数据
@@ -111,7 +108,6 @@ int ucos_read(Network* n, unsigned char* buffer, int len, int timeout_ms)
     }
     return bytes;
 #endif
-		return 0;
 }
 
 int ucos_write(Network* n, unsigned char* buffer, int len, int timeout_ms)
@@ -124,7 +120,6 @@ int ucos_write(Network* n, unsigned char* buffer, int len, int timeout_ms)
     rc = write(self->socket, buffer, len);
     return rc;
 #endif
-		return 0;
 }
 
 void ucos_disconnect(Network* n)
@@ -192,16 +187,6 @@ static void data_thread(void *arg)
 
     self_init(&self);
     NewNetwork(&n, &self);
-    while (1) {
-        ret = ConnectNetwork(&n, options.host, options.port);
-        if (ret) {
-            printf("ConnectNetwork ret: %d\r\n", ret);
-        } else {
-            printf("ConnectNetwork success\r\n");
-            break;
-        }
-
-    }
 
     // create a instance
     ret = datahub_create(&client, instance_id, instance_key, user_name, client_id, &options);

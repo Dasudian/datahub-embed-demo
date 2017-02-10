@@ -6,7 +6,8 @@
 #define _DATAHUB_CLIENT_H_
 
 #include "MQTTClient.h"
-#include "MQTTUcos.h"
+#include "os_cpu.h"
+#include "ucos_ii.h"
 
 #define DATAHUB_DEBUG
 #define DATAHUB_QUEUE_SIZE 1

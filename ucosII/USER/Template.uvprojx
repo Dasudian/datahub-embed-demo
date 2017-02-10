@@ -137,10 +137,10 @@
           </Flash1>
           <bUseTDR>1</bUseTDR>
           <Flash2>BIN\UL2CM3.DLL</Flash2>
-          <Flash3></Flash3>
+          <Flash3>"" ()</Flash3>
           <Flash4></Flash4>
           <pFcarmOut></pFcarmOut>
-          <pFcarmGrp></pFcarmGrp>
+          <pFcarmGrp>USER</pFcarmGrp>
           <pFcArmRoot></pFcArmRoot>
           <FcArmLst>0</FcArmLst>
         </Utilities>
@@ -333,9 +333,9 @@
             <v6Rtti>0</v6Rtti>
             <VariousControls>
               <MiscControls></MiscControls>
-              <Define>STM32F40_41xxx,USE_STDPERIPH_DRIVER</Define>
+              <Define>STM32F40_41xxx,USE_STDPERIPH_DRIVER,DATAHUB_DEMO</Define>
               <Undefine></Undefine>
-              <IncludePath>..\CORE;..\SYSTEM\delay;..\SYSTEM\sys;..\SYSTEM\usart;..\FWLIB\STM32F4xx_StdPeriph_Driver\inc;..\USER;..\HARDWARE\KEY;..\HARDWARE\LCD;..\HARDWARE\ETHERNET;..\HARDWARE\TIMER;..\HARDWARE\LED;..\HARDWARE\SRAM;..\FWLIB\STM32F4x7_ETH_Driver\inc;..\MALLOC;..\USMART;..\LWIP;..\LWIP\arch;..\LWIP\lwip_header;..\LWIP\app\TCP_Client;..\LWIP\lwip_app\lwip_comm;..\LWIP\lwip-1.4.1\src\include;..\LWIP\lwip-1.4.1\src\include\ipv4;..\LWIP\lwip-1.4.1\src\include\lwip;..\LWIP\lwip-1.4.1\src\include\netif;..\LWIP\lwip_app\tcp_client_demo;..\UCOSII\CONFIG;..\UCOSII\CORE;..\UCOSII\PORT;..\LWIP\lwip_app\mqtt_demo;..\MQTT\inc;..\DATAHUB\inc</IncludePath>
+              <IncludePath>..\CORE;..\SYSTEM\delay;..\SYSTEM\sys;..\SYSTEM\usart;..\FWLIB\STM32F4xx_StdPeriph_Driver\inc;..\USER;..\HARDWARE\KEY;..\HARDWARE\LCD;..\HARDWARE\ETHERNET;..\HARDWARE\TIMER;..\HARDWARE\LED;..\HARDWARE\SRAM;..\FWLIB\STM32F4x7_ETH_Driver\inc;..\MALLOC;..\LWIP\arch;..\LWIP\lwip-1.4.1\src\include;..\LWIP\lwip-1.4.1\src\include\ipv4;..\LWIP\lwip-1.4.1\src\include\lwip;..\LWIP\lwip-1.4.1\src\include\netif;..\LWIP\lwip_app\tcp_client_demo;..\UCOSII\CONFIG;..\UCOSII\CORE;..\UCOSII\PORT;..\MQTT\inc;..\DATAHUB\inc;..\LWIP_APP\lwip_comm;..\..\lib;..\LWIP_APP\datahub_demo;..\LWIP</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -393,6 +393,11 @@
               <FileName>system_stm32f4xx.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\system_stm32f4xx.c</FilePath>
+            </File>
+            <File>
+              <FileName>dasudian-datahub-v1.1.lib</FileName>
+              <FileType>4</FileType>
+              <FilePath>..\..\lib\dasudian-datahub-v1.1.lib</FilePath>
             </File>
           </Files>
         </Group>
@@ -527,17 +532,12 @@
             <File>
               <FileName>lwip_comm.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\LWIP\lwip_app\lwip_comm\lwip_comm.c</FilePath>
-            </File>
-            <File>
-              <FileName>tcp_client_demo.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\LWIP\lwip_app\tcp_client_demo\tcp_client_demo.c</FilePath>
+              <FilePath>..\LWIP_APP\lwip_comm\lwip_comm.c</FilePath>
             </File>
             <File>
               <FileName>datahub_demo.c</FileName>
               <FileType>1</FileType>
-              <FilePath>..\LWIP\lwip_app\mqtt_demo\datahub_demo.c</FilePath>
+              <FilePath>..\LWIP_APP\datahub_demo\datahub_demo.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -1,4 +1,108 @@
-﻿## 创建datahub client
+﻿# 通信接口
+
+嵌入式SDK依赖通信接口的实现，所以，用户必须先实现定义在DatahubNetwork.h中的接口，包括ConnectNetwork(),ucos_read(),ucos_write()和ucos_disconnect()。下面详细介绍各个接口的功能和参数
+
+## 通信接口的数据结构
+
+```
+struct Network
+{
+   /*
+    * 指向用户自定义的用于实现通信接口的结构体，可以通过NewNetwork()函数赋值。可被接口
+    * ConnectNetwork()， ucos_read()，ucos_write()，和ucos_disconnect()使用
+    */
+    void *data;
+
+   /*
+    * 一个用于从网络中读取数据的回调函数。指向ucos_read()函数
+    */
+    int (*read) (Network* Net, unsigned char* buffer, int len, int timeout_ms);
+
+   /*
+    * 一个用于向网络发送数据的回调函数。指向ucos_write()函数
+    */
+    int (*write) (Network* Net, unsigned char* buffer, int len, int timeout_ms);
+
+   /*
+    * 一个用于断开网络的回调函数。指向ucos_disconnect()函数
+    */
+    void (*disconnect) (Network* Net);
+
+#define mqttread read
+#define mqttwrite write
+};
+
+```
+
+## 连接服务器
+
+```
+/*
+ * 描述: 连接服务器接口，由datahub_connect()调用
+ * 参数:
+ *     Net: 指向Network结构体， 使用前需要调用NetworkInit()初始化
+ *     addr: 服务器的ip地址或者域名
+ *     port: 服务器的服务端口
+ * 返回值:
+ *    返回0表示成功,否则表示失败
+ *
+ */
+int ConnectNetwork(Network* Net, char* addr, int port);
+```
+
+## 接收数据
+
+```
+/*
+ * 描述: 从网络中接收数据
+ * 参数:
+ *     Net: 指向Network结构体， 使用前需要调用NetworkInit()初始化
+ *     buffer: 接收缓冲区的首地址
+ *     len: 缓冲区的长度
+ *     timeout_ms: 读操作的超时时间。如果经过了timeout_ms毫秒还没有数据，则
+        函数返回
+ * 返回值:
+ *     读取成功的数据长度, 值应大于等于0
+ *
+ */
+int ucos_read(Network* Net, unsigned char* buffer, int len, int timeout_ms);
+```
+
+## 发送数据
+
+```
+/*
+ * 描述: 向网络发送数据, 由datahub_publish(), datahub_subscribe()调用
+ * 参数:
+ *     Net: 指向Network结构体， 使用前需要调用NetworkInit()初始化
+ *     buffer: 发送缓冲区的首地址
+ *     len: 缓冲区的长度
+ *     timeout_ms: 写操作的超时时间。如果经过了timeout_ms毫秒还没有数据，则
+        函数返回
+ * 返回值:
+ *     发送成功的数据长度, 值应大于等于0
+ *
+ */
+int ucos_write(Network* Net, unsigned char* buffer, int len, int timeout_ms);
+```
+
+## 断开连接
+
+```
+/*
+ * 描述: 断开网络连接,由datahub_disconnect()调用
+ * 参数:
+ *     Net: 指向Network结构体， 使用前需要调用NetworkInit()初始化
+ * 返回值:
+ *    无返回值
+ *
+ */
+void ucos_disconnect(Network* Net);
+```
+
+# Datahub接口
+
+## 创建datahub client
 
 创建一个client，可以设置各种mqtt的选项。
 

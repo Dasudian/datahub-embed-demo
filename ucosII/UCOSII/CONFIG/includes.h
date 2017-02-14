@@ -21,8 +21,6 @@
 #include "os_cpu.h"
 #include "os_cfg.h"
 
-#include "sys.h"
-
 #include <stm32f4xx.h>	    
 
 #endif

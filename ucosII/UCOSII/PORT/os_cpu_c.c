@@ -24,8 +24,8 @@
 
 #define  OS_CPU_GLOBALS
 
-#include "includes.h"
-#include "lcd.h"
+#include "os_cpu.h"
+#include "ucos_ii.h"
 /*
 *********************************************************************************************************
 *                                          LOCAL VARIABLES

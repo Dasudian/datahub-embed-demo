@@ -39,10 +39,8 @@
 #include "lwip/lwip_sys.h"
 #include "lwip/mem.h"
 #include "includes.h"
-#include "delay.h"
 #include "arch/sys_arch.h"
 #include "malloc.h"
-
 
 //当消息指针为空时,指向一个常量pvNullPointer所指向的值.
 //在UCOS中如果OSQPost()中的msg==NULL会返回一条OS_ERR_POST_NULL
@@ -273,12 +271,7 @@ sys_thread_t sys_thread_new(const char *name, lwip_thread_fn thread, void *arg, 
 	} 
 	return 0;
 } 
-//lwip延时函数
-//ms:要延时的ms数
-void sys_msleep(u32_t ms)
-{
-	delay_ms(ms);
-}
+
 //获取系统时间,LWIP1.4.1增加的函数
 //返回值:当前系统时间(单位:毫秒)
 u32_t sys_now(void)

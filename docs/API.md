@@ -104,7 +104,7 @@ void ucos_disconnect(Network* Net);
 
 ```
 typedef struct Timer {
-    /* the only variable used to implement these APIs of Timer */
+    /* 用于存储定时器的超时时刻 */
     unsigned long end;
 }Timer;
 

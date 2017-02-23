@@ -1,8 +1,8 @@
 # Introduction
 
-This project provides a demo application written by Dasudian DataHub C SDK for Embedded device. It should be run on uCOSII.
+This project provides a demo application written by Dasudian DataHub C SDK for Embedded device.
 
-This document introduces the structure of current directory, how to run demo, how to develop your application. If you want to know the details of APIs, please read file [API.md](./docs/API.md).
+This document introduces the structure of current directory, how to run this demo, how to develop your application. If you want to know the details of APIs, please read file [API.md](./docs/API.md).
 
 ## Directory Introduction
 
@@ -28,7 +28,7 @@ There are 4 directories: docs, lib, project_template, ucosII.
 
 This directory contains a template project users use to create their own projects quickly for different MCUs.
 
-Go to one of these directories(start by STM32Fx), and you will see:
+Enter into one of these directories starting with STM32F, and you will see:
 
 *DATAHUB_API* directory contains all APIs, including the network and timer APIs users should implement.
 

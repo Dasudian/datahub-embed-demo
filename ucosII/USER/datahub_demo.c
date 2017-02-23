@@ -2,21 +2,29 @@
  * Licensed Materials - Property of Dasudian
  * Copyright Dasudian Technology Co., Ltd. 2017
  */
-#include "includes.h"
+//#include "includes.h"
 #include "DataHubClient.h"
 #include "datahub_demo.h"
+#include "DatahubNetwork.h"
 
-#define DATAHUB_CLIENT_PRIO        6
-#define DATAHUB_CLIENT_STK_SIZE    300
-OS_STK DATAHUB_CLIENT_TASK_STK[DATAHUB_CLIENT_STK_SIZE];
+#if defined(DATAHUB_DEMO)
+#include "lwip/sockets.h"
+#include "lwip/netdb.h"
+#include "lwip/arch.h"
+#include "lwip/api.h"
+#endif
 
+//#define DATAHUB_CLIENT_PRIO        6
+//#define DATAHUB_CLIENT_STK_SIZE    300
+//OS_STK DATAHUB_CLIENT_TASK_STK[DATAHUB_CLIENT_STK_SIZE];
+//
 // datahub sdk demo
 static unsigned char buf[100];
 static unsigned char readbuf[100];
-#define TEST_DATAHUB_CLIENT_PRIO 12
-#define TEST_DATAHUB_TASK_STK_SIZE 500
-OS_STK TEST_DATAHUB_CLIENT_TASK_STK[TEST_DATAHUB_TASK_STK_SIZE];
-
+//#define TEST_DATAHUB_CLIENT_PRIO 12
+//#define TEST_DATAHUB_TASK_STK_SIZE 500
+//OS_STK TEST_DATAHUB_CLIENT_TASK_STK[TEST_DATAHUB_TASK_STK_SIZE];
+//
 void self_init(struct self_s *self)
 {
     self->socket = -1;
@@ -28,7 +36,7 @@ static void onMessageReceived(MessageData* md)
 }
 
 
-static void data_thread(void *arg)
+void data_thread(void *arg)
 {
     datahub_client client;
     datahub_message message = {
@@ -52,9 +60,6 @@ static void data_thread(void *arg)
         100,// send message buf size
         readbuf,// read message buf
         100,// read message buf size
-        TEST_DATAHUB_CLIENT_TASK_STK,// datahub sdk task
-        TEST_DATAHUB_TASK_STK_SIZE,// datahub sdk task size
-        TEST_DATAHUB_CLIENT_PRIO// datahub sdk task prio
     };
     Network n;
     struct self_s self;
@@ -68,7 +73,7 @@ static void data_thread(void *arg)
         ret = datahub_connect(&client, &n);
         if (ret) {
             printf("datahub_connect ret:%d\r\n", ret);
-            delay_ms(2000);
+//            OSTimeDlyHMSM(0, 0, 2, 0);
         } else {
             printf("datahub_connect success\r\n");
             break;
@@ -107,25 +112,10 @@ static void data_thread(void *arg)
         } else {
             printf("datahub_publish success\r\n");
         }
-        OSTimeDlyHMSM(0, 0, 2, 0);
+//        OSTimeDlyHMSM(0, 0, 2, 0);
     }
 
     // disconnect with the server
-    datahub_disconnect(&client);
-    OSTaskDel(0);
+//    datahub_disconnect(&client);
+//    OSTaskDel(0);
 }
-
-INT8U create_datahub_task(void)
-{
-    INT8U res;
-    OS_CPU_SR cpu_sr;
-
-    OS_ENTER_CRITICAL();
-    res = OSTaskCreate(data_thread,(void*)0,(OS_STK*)&DATAHUB_CLIENT_TASK_STK[DATAHUB_CLIENT_STK_SIZE-1],DATAHUB_CLIENT_PRIO);
-    OS_EXIT_CRITICAL();
-
-    return res;
-}
-
-
-

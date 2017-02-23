@@ -5,6 +5,7 @@
 #include "datahub_demo.h"
 #include "usart.h"
 #include "delay.h"
+#include "ucos_ii.h"
 
 //START任务
 //任务优先级
@@ -16,6 +17,22 @@ OS_STK START_TASK_STK[START_STK_SIZE];
 //任务函数
 void start_task(void *pdata); 
 
+
+#define DATAHUB_CLIENT_PRIO        6
+#define DATAHUB_CLIENT_STK_SIZE    300
+OS_STK DATAHUB_CLIENT_TASK_STK[DATAHUB_CLIENT_STK_SIZE];
+
+INT8U create_datahub_task(void)
+{
+    INT8U res;
+    OS_CPU_SR cpu_sr;
+
+    OS_ENTER_CRITICAL();
+    res = OSTaskCreate(data_thread,(void*)0,(OS_STK*)&DATAHUB_CLIENT_TASK_STK[DATAHUB_CLIENT_STK_SIZE-1],DATAHUB_CLIENT_PRIO);
+    OS_EXIT_CRITICAL();
+
+    return res;
+}
 int main()
 {
 		delay_init(168);       	//延时初始化

@@ -1,13 +1,12 @@
 #include "FreeRTOS.h"
 #include "DatahubTimer.h"
-#include "datahub_demo.h"
 
 void InitTimer(Timer* timer)
 {
     timer->end = 0;
 }
 
-// Ê±¼äÊÇ·ñ¹ıÆÚ
+// æ—¶é—´æ˜¯å¦è¿‡æœŸ
 char expired(Timer* timer)
 {
     unsigned long now;
@@ -19,7 +18,7 @@ char expired(Timer* timer)
     return res <= 0;
 }
 
-// ½«¶¨Ê±Æ÷´Óµ±Ç°Ê±¼äÍùºó¼ÓtimeoutºÁÃë
+// å°†å®šæ—¶å™¨ä»å½“å‰æ—¶é—´å¾€ååŠ timeoutæ¯«ç§’
 void countdown_ms(Timer* timer, unsigned int timeout)
 {
     unsigned int now;
@@ -36,13 +35,13 @@ void countdown_ms(Timer* timer, unsigned int timeout)
 
 }
 
-// ½«¶¨Ê±Æ÷´Óµ±Ç°Ê±¼äÍùºó¼ÓtimeoutÃë
+// å°†å®šæ—¶å™¨ä»å½“å‰æ—¶é—´å¾€ååŠ timeoutç§’
 void countdown(Timer* timer, unsigned int timeout)
 {
     countdown_ms(timer, timeout * 1000);
 }
 
-// ·µ»Ø»¹ÓĞ¶àÉÙms³¬Ê±
+// è¿”å›è¿˜æœ‰å¤šå°‘msè¶…æ—¶
 int left_ms(Timer* timer)
 {
     unsigned int now;

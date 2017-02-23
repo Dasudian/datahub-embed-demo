@@ -42,6 +42,8 @@ Enter into one of these directories starting with STM32F, and you will see:
 
 *USER/main.c* contains the function main().
 
+*timer* directory contains implementations of timer for a few OSs. You can use them or implement timer yourself.
+
 *ignore other unimportant files or directories*
 
 ### ucosII directory

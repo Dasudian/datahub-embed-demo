@@ -2,7 +2,7 @@
 #define DATAHUB_TIMER_H
 
 typedef struct Timer {
-    unsigned int end_time;
+    unsigned long end;
 }Timer;
 
 void InitTimer(Timer* timer);

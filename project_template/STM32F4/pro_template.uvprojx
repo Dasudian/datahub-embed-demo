@@ -380,9 +380,9 @@
           <GroupName>DATAHUB_LIB</GroupName>
           <Files>
             <File>
-              <FileName>dasudian-datahub-v1.1.1.1.lib</FileName>
+              <FileName>dasudian-datahub-STM32F4-v2.0.0.lib</FileName>
               <FileType>4</FileType>
-              <FilePath>.\DATAHUB_LIB\dasudian-datahub-v1.1.1.1.lib</FilePath>
+              <FilePath>.\DATAHUB_LIB\dasudian-datahub-STM32F4-v2.0.0.lib</FilePath>
             </File>
           </Files>
         </Group>
@@ -399,6 +399,11 @@
               <FileType>5</FileType>
               <FilePath>.\DATAHUB_API\DatahubNetwork.h</FilePath>
             </File>
+            <File>
+              <FileName>DatahubTimer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>.\DATAHUB_API\DatahubTimer.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -413,6 +418,11 @@
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\USER\main.c</FilePath>
+            </File>
+            <File>
+              <FileName>DatahubTimer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\USER\DatahubTimer.c</FilePath>
             </File>
           </Files>
         </Group>

@@ -14,27 +14,33 @@ There are 4 directories: docs, lib, project_template, ucosII.
 
 ### lib directory
 
-*dasudian-datahub-vx.x.x.lib* is the static library of Datahub C SDK.
+*dasudian-datahub-STM32Fx-vx.x.x.lib* is the static library of Datahub C SDK.
 
 *DataHubClient.h* defines DataHub C APIs beginning with "datahub_".
 
 *DatahubNetwork.h* defines network APIs used to connect the internet/Internet, which should be implemented by users.
 
+*DatahubTimer.h* defines timer APIs used to make sure whether it's timeout when connecting/disconnecting to server or writing/receive data to/from network, which should be implemented by users.
+
 *ignore other unimportant files or directories*
 
 ### project_template directory
 
-This directory contains a template project users use to create their own projects quickly.
+This directory contains a template project users use to create their own projects quickly for different MCUs.
 
-*DATAHUB_API* directory contains all APIs, including the network APIs users should implement.
+Go to one of these directories(start by STM32Fx), and you will see:
+
+*DATAHUB_API* directory contains all APIs, including the network and timer APIs users should implement.
 
 *DATAHUB_LIB* directory contains the static library of Dasudian C SDK.
 
 *pro_template.uvprojx* is the project file of this template, opened by keil.
 
-*DatahubNetwork.c* is the implementation of network APIs(empty), which are defined in [DatahubNetwork.h](./lib/DatahubNetwork.h)
+*USER/DatahubNetwork.c* is the implementation of network APIs(empty), which are defined in [DatahubNetwork.h](./lib/DatahubNetwork.h)
 
-*main.c* contains the function main().
+*USER/DatahubTimer.c* is the implementation of timer APIs(empty), which are defined in [DatahubTimer.h](./lib/DatahubTimer.h)
+
+*USER/main.c* contains the function main().
 
 *ignore other unimportant files or directories*
 
@@ -51,6 +57,8 @@ This directory contains the codes of this demo application, created by template 
 *demo.uvprojx* is the project file of this demo, which can be opened by keil.
 
 [DatahubNetwork.c](./ucosII/USER/DatahubNetwork.c) is the implementation of network APIs.
+
+[DatahubTimer.c](./ucosII/USER/DatahubTimer.c) is the implementation of timer APIs.
 
 [datahub_demo.c](./ucosII/USER/datahub_demo.c) shows how to use DataHub C SDK.
 
@@ -94,9 +102,11 @@ use keil to open ucosII/demo.uvprojx, build this project, and download to STM32F
 
 0.Compile fireware of your board successfully. It is one of the basic step.
 
-1.Transplant uCOSII to your board successfully. It is one of the basic step.
+1.Transplant uCOSII, FreeRTOS or other OSs to your board successfully. It is one of the basic step.
 
 2.Implement APIs defined in file [DatahubNetwork.h](./lib/DatahubNetwork.h), including ConnectNetwork(), ucos_read(), ucos_write(), ucos_disconnect(). These APIs are used to connect/disconnect internet/Internet and send/reveive data. Without them, compilation will occur errors.(Demo implements these APIs in file [DatahubNetwork.c](./ucosII/USER/DatahubNetwork.c))
+
+3.Implement APIs defined in file [DatahubTimer.h](./lib/DatahubTimer.h), including InitTimer(), expired(), countdown_ms(), countdown(), left_ms(). These APIs are used by SDK. Without them, compilation will occur errors.(Demo implements these APIs in file [DatahubTimer.c](./ucosII/USER/DatahubTimer.c))
 
 3.Use APIs defined in file [DataHubClient.h](./lib/DataHubClient.h) to connect and send data to IoT DataHub of Dasudian.(Demo connects and sends data to IoT DataHub of Dasudian in file [datahub_demo.c](./ucosII/USER/datahub_demo.c))
 

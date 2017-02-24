@@ -312,3 +312,23 @@ typedef struct datahub_client {
 	unsigned int current_reconnect_rate;
 } datahub_client;
 ```
+
+# Q&A
+
+Q: Program stops at 'BKPT 0xAB' when debugging. Besides, when you check the calling stack, you see function _sys_open(), freopen(), _initio() and main().
+
+A: This could happen when using version 1.x.x of SDK, which uses printf() to print out debug information. This is a bug of SDK. There are two way to solve this problem:1) update SDK to version 2.0.0. 2) rewrite function fputc() then click "Use MicroLib"(Options for Target --> Target --> Code Generation --> click "Use MicroLib")
+
+Q:
+
+...
+
+Error: L6367E: datahubclient.o attributes are not compatible with the provided attributes . Tag_CPU_arch = ARM v7E-M (=13)
+
+...
+
+A: This is because the arch of your CPU doesn't match the library. Please find the appropriate library of your CPU in [lib](./lib). If you don't find what you need, please contact us(support@dasudian.com).
+
+# Support
+
+If there are other problems or advice, Please send a email to support@dasudian.com.

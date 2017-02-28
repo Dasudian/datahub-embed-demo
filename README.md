@@ -118,7 +118,7 @@ use keil to open ucosII/demo.uvprojx, build this project, and download to STM32F
 
 Q: Program stops at 'BKPT 0xAB' when debugging. Besides, when you check the calling stack, you see function _sys_open(), freopen(), _initio() and main().
 
-A: This could happen when using version 1.x.x of SDK, which uses printf() to print out debug information. This is a bug of SDK. There are two way to solve this problem:1) update SDK to version 2.0.0. 2) rewrite function fputc() then click "Use MicroLib"(Options for Target --> Target --> Code Generation --> click "Use MicroLib")
+A: This could happen when using version 1.x.x of SDK, which uses printf() to print out debug information. This is a bug of SDK. There are two ways to solve this problem:1) update SDK to version 2.0.0. 2) rewrite function fputc() then click "Use MicroLib"(Options for Target --> Target --> Code Generation --> click "Use MicroLib")
 
 Q:
 

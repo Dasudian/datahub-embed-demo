@@ -38,7 +38,12 @@ char expired(Timer* timer);
 void countdown_ms(Timer* timer, unsigned int timeout);
 
 /*
- * 与countdown_ms()功能相同，只不过countdown()的参数timeout的单位为秒
+ * 描述: 增加定时器的时间
+ * 参数:
+ *     timer: 指向Timer结构体
+ *     timeout: 增加的时间，单位为秒
+ * 返回值:
+ *    无返回值
  *
  */
 void countdown(Timer* timer, unsigned int timeout);

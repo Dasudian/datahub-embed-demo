@@ -335,7 +335,7 @@
               <MiscControls></MiscControls>
               <Define>USE_STDPERIPH_DRIVER,STM32F40_41xxx,LWIP_DHCP</Define>
               <Undefine></Undefine>
-              <IncludePath>.\DATAHUB_API\inc;.\DATAHUB_API;.\UCOSII\CONFIG;.\UCOSII\CORE;.\UCOSII\PORT;.\STM32F4xx_StdPeriph_Driver\inc;./USER;.\CORE;.\LWIP;.\LWIP\lwip-1.4.1\src\include;.\LWIP\arch;.\LWIP_APP;.\LWIP\lwip-1.4.1\src\include\ipv4;.\MALLOC;.\SYSTEM\sys;.\STM32F4x7_ETH_Driver\inc;.\SYSTEM\usart;.\SYSTEM\delay;.\STM32_CONF</IncludePath>
+              <IncludePath>..\lib;..\lib\inc;.\UCOSII\CONFIG;.\UCOSII\CORE;.\UCOSII\PORT;.\STM32F4xx_StdPeriph_Driver\inc;.\USER;.\CORE;.\LWIP;.\LWIP\lwip-1.4.1\src\include;.\LWIP\arch;.\LWIP_APP;.\LWIP\lwip-1.4.1\src\include\ipv4;.\MALLOC;.\SYSTEM\sys;.\STM32F4x7_ETH_Driver\inc;.\SYSTEM\usart;.\SYSTEM\delay;.\STM32_CONF</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -382,7 +382,7 @@
             <File>
               <FileName>dasudian-datahub-STM32F4-v2.0.0.lib</FileName>
               <FileType>4</FileType>
-              <FilePath>.\DATAHUB_LIB\dasudian-datahub-STM32F4-v2.0.0.lib</FilePath>
+              <FilePath>..\lib\dasudian-datahub-STM32F4-v2.0.0.lib</FilePath>
             </File>
           </Files>
         </Group>
@@ -392,12 +392,17 @@
             <File>
               <FileName>DataHubClient.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\DATAHUB_API\DataHubClient.h</FilePath>
+              <FilePath>..\lib\DataHubClient.h</FilePath>
             </File>
             <File>
               <FileName>DatahubNetwork.h</FileName>
               <FileType>5</FileType>
-              <FilePath>.\DATAHUB_API\DatahubNetwork.h</FilePath>
+              <FilePath>..\lib\DatahubNetwork.h</FilePath>
+            </File>
+            <File>
+              <FileName>DatahubTimer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\lib\DatahubTimer.h</FilePath>
             </File>
           </Files>
         </Group>

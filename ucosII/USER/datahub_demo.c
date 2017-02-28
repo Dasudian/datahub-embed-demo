@@ -6,13 +6,12 @@
 #include "DataHubClient.h"
 #include "datahub_demo.h"
 #include "DatahubNetwork.h"
-
-#if defined(DATAHUB_DEMO)
 #include "lwip/sockets.h"
 #include "lwip/netdb.h"
 #include "lwip/arch.h"
 #include "lwip/api.h"
-#endif
+#include "ucos_ii.h"
+
 
 //#define DATAHUB_CLIENT_PRIO        6
 //#define DATAHUB_CLIENT_STK_SIZE    300
@@ -73,7 +72,7 @@ void data_thread(void *arg)
         ret = datahub_connect(&client, &n);
         if (ret) {
             printf("datahub_connect ret:%d\r\n", ret);
-//            OSTimeDlyHMSM(0, 0, 2, 0);
+            OSTimeDlyHMSM(0, 0, 2, 0);
         } else {
             printf("datahub_connect success\r\n");
             break;
@@ -112,7 +111,7 @@ void data_thread(void *arg)
         } else {
             printf("datahub_publish success\r\n");
         }
-//        OSTimeDlyHMSM(0, 0, 2, 0);
+        OSTimeDlyHMSM(0, 0, 2, 0);
     }
 
     // disconnect with the server

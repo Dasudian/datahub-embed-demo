@@ -1,0 +1,22 @@
+Dependencies for Project 'pro_template', Target 'Tem': (DO NOT MODIFY !)
+F (..\..\lib\dasudian-datahub-STM32F4-v2.0.0.lib)(0x58AFA095)()
+F (..\..\lib\DataHubClient.h)(0x58AFFE49)()
+F (..\..\lib\DatahubNetwork.h)(0x58A81BF5)()
+F (..\..\lib\DatahubTimer.h)(0x58B4E82B)()
+F (.\USER\DatahubNetwork.c)(0x58AE7A76)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I ..\..\lib -I ..\..\lib\inc-I"\\vmware-host\Shared Folders\ubuntu-home\eden\program\datahub-embedded-demo\project_template\STM32F1\RTE\_Tem"-IC:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\1.0.8\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="522" -DSTM32F40_41xxx-o .\obj\datahubnetwork.o --omf_browse .\obj\datahubnetwork.crf --depend .\obj\datahubnetwork.d)
+I (..\..\lib\DatahubNetwork.h)(0x58A81BF5)
+F (.\USER\main.c)(0x58AE7780)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I ..\..\lib -I ..\..\lib\inc-I"\\vmware-host\Shared Folders\ubuntu-home\eden\program\datahub-embedded-demo\project_template\STM32F1\RTE\_Tem"-IC:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\1.0.8\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="522" -DSTM32F40_41xxx-o .\obj\main.o --omf_browse .\obj\main.crf --depend .\obj\main.d)
+I (..\..\lib\DataHubClient.h)(0x58AFFE49)
+I (..\..\lib\inc\MQTTClient.h)(0x58AAA44D)
+I (..\..\lib\inc\MQTTPacket.h)(0x58A81BF5)
+I (..\..\lib\inc\MQTTConnect.h)(0x58A81BF5)
+I (..\..\lib\inc\MQTTPublish.h)(0x58A81BF5)
+I (..\..\lib\inc\MQTTSubscribe.h)(0x58A81BF5)
+I (..\..\lib\inc\MQTTUnsubscribe.h)(0x58A81BF5)
+I (..\..\lib\inc\MQTTFormat.h)(0x58A81BF5)
+I (..\..\lib\inc\StackTrace.h)(0x58AE4C26)
+I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x57F606B8)
+I (..\..\lib\DatahubNetwork.h)(0x58A81BF5)
+I (..\..\lib\DatahubTimer.h)(0x58B4E82B)
+F (.\USER\DatahubTimer.c)(0x58AE76A6)(-c --cpu Cortex-M4.fp -g -O0 --apcs=interwork --split_sections -I ..\..\lib -I ..\..\lib\inc-I"\\vmware-host\Shared Folders\ubuntu-home\eden\program\datahub-embedded-demo\project_template\STM32F1\RTE\_Tem"-IC:\Keil_v5\ARM\PACK\Keil\STM32F4xx_DFP\1.0.8\Device\Include-IC:\Keil_v5\ARM\CMSIS\Include-D__UVISION_VERSION="522" -DSTM32F40_41xxx-o .\obj\datahubtimer.o --omf_browse .\obj\datahubtimer.crf --depend .\obj\datahubtimer.d)
+I (..\..\lib\DatahubTimer.h)(0x58B4E82B)

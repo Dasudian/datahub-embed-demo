@@ -5,6 +5,7 @@
 #include "datahub_demo.h"
 #include "usart.h"
 #include "delay.h"
+#include "ucos_ii.h"
 
 //START任务
 //任务优先级
@@ -16,23 +17,39 @@ OS_STK START_TASK_STK[START_STK_SIZE];
 //任务函数
 void start_task(void *pdata); 
 
+
+#define DATAHUB_CLIENT_PRIO        6
+#define DATAHUB_CLIENT_STK_SIZE    300
+OS_STK DATAHUB_CLIENT_TASK_STK[DATAHUB_CLIENT_STK_SIZE];
+
+INT8U create_datahub_task(void)
+{
+    INT8U res;
+    OS_CPU_SR cpu_sr;
+
+    OS_ENTER_CRITICAL();
+    res = OSTaskCreate(data_thread,(void*)0,(OS_STK*)&DATAHUB_CLIENT_TASK_STK[DATAHUB_CLIENT_STK_SIZE-1],DATAHUB_CLIENT_PRIO);
+    OS_EXIT_CRITICAL();
+
+    return res;
+}
 int main()
 {
 		delay_init(168);       	//延时初始化
 		uart_init(115200);    	//串口波特率设置
 	
-		printf("init memory pool\n");
+		printf("init memory pool\r\n");
 		mymem_init(SRAMIN);  	//初始化内部内存池
 		mymem_init(SRAMEX);  	//初始化外部内存池
 		mymem_init(SRAMCCM); 	//初始化CCM内存池
 	
-		printf("init uCOS\n");
+		printf("init uCOS\r\n");
 		OSInit(); 					//UCOS初始化
-		printf("init LWIP\n");
+		printf("init LWIP\r\n");
 		while(lwip_comm_init()); 	//lwip初始化
-		printf("create task of DataHub\n");
+		printf("create task of DataHub\r\n");
 		while (create_datahub_task());
-		printf("create dhcp task\n");
+		printf("create dhcp task\r\n");
 		OSTaskCreate(start_task,(void*)0,(OS_STK*)&START_TASK_STK[START_STK_SIZE-1],START_TASK_PRIO);
 		OSStart(); //开启UCOS
 

@@ -1,9 +1,0 @@
---cpu=Cortex-M4.fp
-"..\..\lib\dasudian-datahub-STM32F4-v2.0.0.lib"
-".\obj\datahubnetwork.o"
-".\obj\main.o"
-".\obj\datahubtimer.o"
---strict --scatter ".\OBJ\pro_template.sct"
---summary_stderr --info summarysizes --map --xref --callgraph --symbols
---info sizes --info totals --info unused --info veneers
---list ".\OBJ\pro_template.map" -o .\OBJ\pro_template.axf

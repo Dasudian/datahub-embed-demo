@@ -335,7 +335,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>..\..\lib;..\..\lib\inc</IncludePath>
+              <IncludePath>..\..\include;..\..\include\inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -380,9 +380,9 @@
           <GroupName>DATAHUB_LIB</GroupName>
           <Files>
             <File>
-              <FileName>dasudian-datahub-STM32F4-v2.0.0.lib</FileName>
+              <FileName>dasudian-datahub-sdk-3.0.0-STM32F4.lib</FileName>
               <FileType>4</FileType>
-              <FilePath>..\..\lib\dasudian-datahub-STM32F4-v2.0.0.lib</FilePath>
+              <FilePath>..\..\lib\dasudian-datahub-sdk-3.0.0-STM32F4.lib</FilePath>
             </File>
           </Files>
         </Group>
@@ -392,17 +392,17 @@
             <File>
               <FileName>DataHubClient.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\lib\DataHubClient.h</FilePath>
+              <FilePath>..\..\include\DataHubClient.h</FilePath>
             </File>
             <File>
               <FileName>DatahubNetwork.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\lib\DatahubNetwork.h</FilePath>
+              <FilePath>..\..\include\DatahubNetwork.h</FilePath>
             </File>
             <File>
               <FileName>DatahubTimer.h</FileName>
               <FileType>5</FileType>
-              <FilePath>..\..\lib\DatahubTimer.h</FilePath>
+              <FilePath>..\..\include\DatahubTimer.h</FilePath>
             </File>
           </Files>
         </Group>

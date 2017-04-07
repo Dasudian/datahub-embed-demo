@@ -94,6 +94,21 @@
 
 - 使用[DataHubClient.h](./include/DataHubClient.h)定义的接口连接服务器并收发数据.(demo在[datahub_demo.c](./demo/USER/datahub_demo.c)实现了这些功能)
 
+- 为了便于调试, 我们调用datahub_printf()输出了很多调试信息, 但是需要用户实现该函数. 如果重定向了输出, 可以取消注释'vprintf(format, ap);'
+
+```
+#include <stdarg.h>
+void datahub_printf(const char *format, ...)
+{
+    va_list ap;
+
+    va_start(ap, format);
+    /* 如果重定向了输出,可以取消注释*/
+//  vprintf(format, ap);
+    va_end(ap);
+}
+```
+
 - build工程并下载到板子中, 程序应该就能运行起来
 
 ## 帮助

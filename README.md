@@ -78,7 +78,7 @@
 
 板子: ALIENTEK的STM32F4 EXPLORER
 
-使用Keil打开[demo.uvprojx](./demo/demo.uvprojx)工程目录文件,直接编译下载即可. 只能在STM32F4 EXPLORER使用
+使用Keil打开demo.uvprojx(demo/demo.uvprojx)工程目录文件,直接编译下载即可. 只能在STM32F4 EXPLORER使用
 
 *如果你想把该demo移植到你的板子上, 请空出时间并耐心移植*
 

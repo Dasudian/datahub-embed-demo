@@ -1,8 +1,10 @@
 # 介绍
 
-该项目提供一个基于嵌入式C SDK的Demo程序.
+该项目为大数点工业大数据分析和设备管理服务的数据采集端的嵌入式C SDK的Demo程序，其中包含了SDK库文件本身和一个使用该SDK的Demo程序，演示如何通过集成大数点IoT DataHub SDK实现设备数据的采集。
 
-本文档介绍了当前目录结构和每个文件的作用,如何编译和运行demo程序, 以及如何开发你自己的程序. 如果你想知道API的细节,请阅读API文档[API.md](./docs/API.md)或者头文件[DataHubClient.h](./include/DataHubClient.h)
+大数点工业大数据服务让设备变得有生命，并让其整个生命周期为你管理，让她的每一次呼吸（产生数据）在大数点云端为你变现！关于如何获得大数点工业大数据分析服务，请联系大数点顾问团队sales@dasudian.com或support@dasudian.com，我们将竭诚为您展示大数点丰富多彩而致力于解决实际问题的数据分析服务。
+
+本文档介绍了当前目录结构和每个文件的作用，如何编译和运行demo程序, 以及如何开发你自己的程序. 如果你想知道API的细节,请阅读API文档[API.md](./docs/API.md)或者头文件[DataHubClient.h](./include/DataHubClient.h)
 
 ## 目录结构说明
 

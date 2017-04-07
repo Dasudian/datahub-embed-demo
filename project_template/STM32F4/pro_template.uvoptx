@@ -222,8 +222,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\lib\dasudian-datahub-STM32F4-v2.0.0.lib</PathWithFileName>
-      <FilenameWithoutPath>dasudian-datahub-STM32F4-v2.0.0.lib</FilenameWithoutPath>
+      <PathWithFileName>..\..\lib\dasudian-datahub-sdk-3.0.0-STM32F4.lib</PathWithFileName>
+      <FilenameWithoutPath>dasudian-datahub-sdk-3.0.0-STM32F4.lib</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -242,7 +242,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\lib\DataHubClient.h</PathWithFileName>
+      <PathWithFileName>..\..\include\DataHubClient.h</PathWithFileName>
       <FilenameWithoutPath>DataHubClient.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -254,7 +254,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\lib\DatahubNetwork.h</PathWithFileName>
+      <PathWithFileName>..\..\include\DatahubNetwork.h</PathWithFileName>
       <FilenameWithoutPath>DatahubNetwork.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
@@ -266,7 +266,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\..\lib\DatahubTimer.h</PathWithFileName>
+      <PathWithFileName>..\..\include\DatahubTimer.h</PathWithFileName>
       <FilenameWithoutPath>DatahubTimer.h</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>

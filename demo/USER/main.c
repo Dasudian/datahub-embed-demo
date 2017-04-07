@@ -40,10 +40,8 @@ int main()
 	
 		printf("init memory pool\r\n");
 		mymem_init(SRAMIN);  	//初始化内部内存池
-		mymem_init(SRAMEX);  	//初始化外部内存池
-		mymem_init(SRAMCCM); 	//初始化CCM内存池
-	
-		printf("init uCOS\r\n");
+
+        printf("init uCOS\r\n");
 		OSInit(); 					//UCOS初始化
 		printf("init LWIP\r\n");
 		while(lwip_comm_init()); 	//lwip初始化

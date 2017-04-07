@@ -24,22 +24,16 @@
 #define MAX_PACKET_ID 65535
 #define MAX_MESSAGE_HANDLERS 1
 
-enum QoS { 
-	QOS0, 
-	QOS1, 
-	QOS2 
+enum QoS {
+	QOS0 = 0,
+	QOS1 = 1,
+	QOS2 = 2
 };
 
 // all failure return codes must be negative
-enum datahub_return_code { 
-	DSD_MQ_TOPIC_ARRAY_FULL = -7,
-	DSD_MQ_ILLEGAL_PARAMETER = -6,
-	DSD_NETWORK_UNREACHABLE = -5,
-	DSD_MQ_SERVER_NOTCONNECTED = -4,
-	DSD_MQ_INVALID_APPID_OR_APPSEC = -3,
-	DSD_MQ_TIMEOUT = -2,
-	DSD_MQ_FAILURE = -1,
-	DSD_MQ_SUCCESS = 0,
+enum mqtt_error_code_s {
+	MQTT_FAILURE = -1,
+	MQTT_SUCCESS = 0
 };
 
 void NewTimer(Timer*);
@@ -62,20 +56,30 @@ struct MessageData
     MQTTString* topicName;
 };
 
-typedef void (*messageHandler)(MessageData*);
+typedef void (*messageHandler)(void *, MessageData*);
 
 typedef struct Client Client;
 
-int MQTTConnect (Client*, MQTTPacket_connectData*);
-int MQTTPublish (Client*, const char*, MQTTMessage*);
-int MQTTSubscribe (Client*, const char*, enum QoS, messageHandler);
-int MQTTUnsubscribe (Client*, const char*);
-int MQTTDisconnect (Client*);
+/* timeout: ms */
+int MQTTConnect (Client*, MQTTPacket_connectData*, int timeout_ms);
+int MQTTPublish (Client* c, const char* topicName, MQTTMessage* message, unsigned int timeout_ms);
+/* messageHandler can be NULL */
+int MQTTSubscribe (Client*, const char*, enum QoS, int,messageHandler);
+int MQTTUnsubscribe (Client*, const char*, int);
+/* timeout: ms  */
+int MQTTDisconnect (Client*, int timeout_ms);
 int MQTTYield (Client*, int);
 
 void setDefaultMessageHandler(Client*, messageHandler);
 
-void MQTTClient(Client*, Network*, unsigned int, unsigned char*, size_t, unsigned char*, size_t);
+/* 
+ * argument:
+ *  command_timeout: ms
+ *  connection_status_changed: can be NULL
+ */
+
+void MQTTClient(Client*, Network*, unsigned int, unsigned char*, size_t, unsigned char*, size_t, void *context,
+        void (*connection_status_changed)(void *context, int isconnected));
 
 struct Client {
     unsigned int next_packetid;
@@ -91,14 +95,21 @@ struct Client {
     struct MessageHandlers
     {
         const char* topicFilter;
-        void (*fp) (MessageData*);
+        void (*fp) (void*, MessageData*);
     } messageHandlers[MAX_MESSAGE_HANDLERS];      // Message handlers are indexed by subscription topic
+    /* pass to callbacks */
+    void *context;
     
     void (*defaultMessageHandler) (MessageData*);
     
     Network* ipstack;
     Timer ping_timer;
+
+    void (*connection_status_changed)(void *context, int isconnected);
+    /* 0 means we haven't notify that connection status has lost*/
+    int isnotify_connection_lost;
 };
+
 
 #define DefaultClient {0, 0, 0, 0, NULL, NULL, 0, 0, 0}
 

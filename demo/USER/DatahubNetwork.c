@@ -37,20 +37,14 @@ int ucos_read(Network* n, unsigned char* buffer, int len, int timeout_ms)
     while (bytes < len)
     {
         int rc = recv(self->socket, &buffer[bytes], (size_t)(len - bytes), 0);
-        if (rc == 0) {
-            //printf("ucos_read: rc == 0\r\n");
-        }
-        if (rc == -1)
+        if (rc != -1)
         {
-            //printf("ucos_read:rc == -1, error = %d\r\n", errno);
-            if (errno != ENOTCONN && errno != ECONNRESET)
-            {
-                bytes = -1;
-                break;
-            }
-        }
-        else
             bytes += rc;
+        }
+        else {                          
+            printf("recv() failed, rc [ %d ] errno [ %d ]\r\n", rc, errno);
+            return -1;
+        }
     }
     return bytes;
 }
@@ -60,10 +54,15 @@ int ucos_write(Network* n, unsigned char* buffer, int len, int timeout_ms)
     int rc;
     struct self_s *self = (struct self_s *)n->data;
 
-    setsockopt(self->socket, SOL_SOCKET, SO_RCVTIMEO, (void*)&timeout_ms, sizeof(int));
+    setsockopt(self->socket, SOL_SOCKET, SO_SNDTIMEO, (void*)&timeout_ms, sizeof(int));
     rc = write(self->socket, buffer, len);
+    if (rc == len) {
+        printf("write() success, len [ %d ]\r\n", rc);
+    }else {
+        printf("write() failed, rc [ %d ] errno [%d]\r\n", rc, errno);
+        return -1;
+    }
     return rc;
-
 }
 
 void ucos_disconnect(Network* n)
@@ -74,11 +73,12 @@ void ucos_disconnect(Network* n)
 
 }
 
+struct sockaddr_in address ={0};
 
 int ConnectNetwork(Network* n, char* addr, int port)
 {
     int type = SOCK_STREAM;
-    struct sockaddr_in address;
+
     int rc = -1;
     int family = AF_INET;
     struct addrinfo *result = NULL;
@@ -110,16 +110,25 @@ int ConnectNetwork(Network* n, char* addr, int port)
             rc = -1;
 
         freeaddrinfo(result);
+    } else {
+        printf("getaddrinfo() failed, rc [ %d ] errno [%d]\r\n", rc, errno);
+        return -1;
     }
 
-    if (rc == 0)
+    self->socket = socket(family, type, 0);
+    if ( -1 == self->socket)
     {
-        self->socket = socket(family, type, 0);
-        if (self->socket != -1)
-        {
-            rc = connect(self->socket, (struct sockaddr*)&address, sizeof(address));
-        }
+        printf("socket() failed, rc [ %d ] errno [%d]\r\n", rc, errno);
+        return -1;  
     }
-
-    return rc;
+    
+    rc = connect(self->socket, (struct sockaddr*)&address, sizeof(address));
+    if ( -1 == rc)
+    {
+        printf("connect() failed, rc [ %d ] errno [%d]\r\n", rc, errno);
+        close(self->socket);
+        return -1;  
+    }
+    
+    return 0;
 }

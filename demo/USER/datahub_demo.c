@@ -2,7 +2,6 @@
  * Licensed Materials - Property of Dasudian
  * Copyright Dasudian Technology Co., Ltd. 2017
  */
-//#include "includes.h"
 #include "DataHubClient.h"
 #include "datahub_demo.h"
 #include "DatahubNetwork.h"
@@ -13,17 +12,10 @@
 #include "ucos_ii.h"
 #include <stdarg.h>
 
-
-//#define DATAHUB_CLIENT_PRIO        6
-//#define DATAHUB_CLIENT_STK_SIZE    300
-//OS_STK DATAHUB_CLIENT_TASK_STK[DATAHUB_CLIENT_STK_SIZE];
-//
-// datahub sdk demo
+/* 发送缓冲区 */
 static unsigned char sendbuf[100];
+/* 读缓冲区 */
 static unsigned char readbuf[100];
-//#define TEST_DATAHUB_CLIENT_PRIO 12
-//#define TEST_DATAHUB_TASK_STK_SIZE 500
-//OS_STK TEST_DATAHUB_CLIENT_TASK_STK[TEST_DATAHUB_TASK_STK_SIZE];
 
 /* 如何处理输出 */
 void datahub_printf(const char *format, ...)
@@ -36,11 +28,13 @@ void datahub_printf(const char *format, ...)
     va_end(ap);
 }
 
+/* 初始化socket */
 void self_init(struct self_s *self)
 {
     self->socket = -1;
 }
 
+/* 接收到消息后的回调函数 */
 void onMessageReceived(void *context, lenstring *topic, datahub_message *msg)
 {
     datahub_client *client = (datahub_client *)context;
@@ -53,6 +47,7 @@ void onMessageReceived(void *context, lenstring *topic, datahub_message *msg)
     printf(" ] payload [ %.*s ]\r\n", msg->payload_len, (char*)msg->payload);
 }
 
+/* 客户端的网络发生变化后,通知用户的回调函数 */
 void connection_status_changed(void *context, int isconnected)
 {
     datahub_client *client = (datahub_client *)context;
@@ -70,15 +65,14 @@ void data_thread(void *arg)
 {
     datahub_message message = DATAHUB_MESSAGE_INITIALIZER;
     datahub_options options = DATAHUB_OPTIONS_INITIALIZER;
-    int ret;
-    char *topic = "embedded_topic1";
-    char *instance_id = "dsd_9FmYSNiqpFmi69Bui0_A";// instance_id get from Dasudian customer service
-    char *instance_key = "238f173d6cc0608a";// instance_key get from Dasudian customer service
-    char *user_name = "embedded_user_name";// a name for the client
-    char *client_id = "embedded_client_id1";// A unique identifier for a client
+    int ret, i;
+    char *topic = "embedded_topic";/* 订阅的topic */
+    char *instance_id = "your_instance_id";//请联系大数点获取
+    char *instance_key = "your_instance_key";//请联系大数点获取
+    char *client_name = "embedded_client_name";//客户端的别名
+    char *client_id = "embedded_client_id";//客户端的唯一标识符
     Network network;
     struct self_s self;
-
 
     /* 初始化消息 */
     message.payload = "hello world";
@@ -95,18 +89,17 @@ void data_thread(void *arg)
 
     /* 初始化网络 */
     self_init(&self);
+    /* 必须调用NewNetwork初始化 */
     NewNetwork(&network, &self);
 
-    /* 等待网络初始化完成 */
-//    OSTimeDlyHMSM(0, 0, 5, 0);
-    // create a instance
-    ret = datahub_create(&client, instance_id, instance_key, user_name, client_id, &network, &options);
+    /* 创建客户端实例 */
+    ret = datahub_create(&client, instance_id, instance_key, client_name, client_id, &network, &options);
     if (ret != ERROR_NONE) {
         printf("create client failed, ret [ %d ]\r\n", ret);
         return;
     }
 
-    // subscribe a topic
+    /* 订阅topic */
     while (1) {
         ret = datahub_subscribe(&client, topic, 10);
         if (ret) {
@@ -118,18 +111,18 @@ void data_thread(void *arg)
         }
     }
 
-//    // unsubscribe a topic
-//    ret = datahub_unsubscribe(&client, "unused_topic", 10);
+//    /* 取消订阅 */
+//    ret = datahub_unsubscribe(&client, topic, 10);
 //    if (ret) {
 //        printf("datahub_unsubscribe failed:%d\r\n", ret);
 //    } else {
 //        printf("datahub_unsubscribe success\r\n");
 //    }
 
-    // continue publish
-//    for (i = 0;i < 10; i++) {
-      while (1) {
-        ret = datahub_sendrequest(&client, topic, &message, 2, 10);
+    /* 发送10个QoS为0的消息(可能到达,也可能不到达) */
+    for (i = 0;i < 10; i++) {
+//      while (1) {
+        ret = datahub_sendrequest(&client, topic, &message, 0, 10);
         if (ret) {
             printf("datahub_publish failed:%d\r\n", ret);
         } else {
@@ -138,8 +131,6 @@ void data_thread(void *arg)
         datahub_yield(&client, 2000);
     }
 
+    /* 断开连接并销毁客户端 */
     datahub_destroy(&client);
-    // disconnect with the server
-//    datahub_disconnect(&client);
-//    OSTaskDel(0);
 }

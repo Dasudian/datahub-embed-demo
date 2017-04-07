@@ -1,135 +1,101 @@
-# Introduction
+# 介绍
 
-This project provides a demo application written by Dasudian DataHub C SDK for Embedded device.
+该项目提供一个基于嵌入式C SDK的Demo程序.
 
-This document introduces the structure of current directory, how to run this demo, how to develop your application. If you want to know the details of APIs, please read file [API.md](./docs/API.md).
+本文档介绍了当前目录结构和每个文件的作用,如何编译和运行demo程序, 以及如何开发你自己的程序. 如果你想知道API的细节,请阅读API文档[API.md](./docs/API.md)或者头文件[DataHubClient.h](./include/DataHubClient.h)
 
-## Directory Introduction
+## 目录结构说明
 
-There are 4 directories: docs, lib, project_template, ucosII.
+有五大目录：docs, include, lib, project_template, demo
 
-### docs directory
+### docs目录
 
-[API.md](./docs/API.md) introduces APIs, including network APIs.
+[API.md](./docs/API.md) 包含了SDK的所有API, 包括需要用户实现的网络接口和定时器接口
 
-### lib directory
+### include目录
 
-*dasudian-datahub-STM32Fx-vx.x.x.lib* is the static library of Datahub C SDK.
+*DataHubClient.h*定义了Datahub的接口,接口以"datahub_"开头
 
-*DataHubClient.h* defines DataHub C APIs beginning with "datahub_".
+*DatahubNetwork.h*定义了网络接口. 这些接口需要用户来实现并由SDK调用
 
-*DatahubNetwork.h* defines network APIs used to connect the internet/Internet, which should be implemented by users.
+*DatahubTimer.h*定义了定时器接口. 这些接口用于同步超时的接口和函数. 需要用户实现并由SDK调用
 
-*DatahubTimer.h* defines timer APIs used to make sure whether it's timeout when connecting/disconnecting to server or writing/receive data to/from network, which should be implemented by users.
+*inc*目录下是SDK使用的其他头文件, 用户不需要关心这些文件, 只需要保证这些文件包含在项目中即可
 
-*ignore other unimportant files or directories*
+### lib目录
 
-### project_template directory
+该目录下有最新的SDK库
 
-This directory contains a template project users use to create their own projects quickly for different MCUs.
+### project_template 目录
 
-Enter into one of these directories starting with STM32F, and you will see:
+该目录包含了一个模板工程, 用于帮助用户快速创建工程
 
-*DATAHUB_API* directory contains all APIs, including the network and timer APIs users should implement.
+进入以"STM32F"开头的目录:
 
-*DATAHUB_LIB* directory contains the static library of Dasudian C SDK.
+*DATAHUB_API*目录包含了所有的API, 包括用户需要实现的网络接口和定时器接口
 
-*pro_template.uvprojx* is the project file of this template, opened by keil.
+*DATAHUB_LIB* 目录包含了SDK静态库
 
-*USER/DatahubNetwork.c* is the implementation of network APIs(empty), which are defined in [DatahubNetwork.h](./lib/DatahubNetwork.h)
+*pro_template.uvprojx* 是模板的工程文件(基于Keil)
 
-*USER/DatahubTimer.c* is the implementation of timer APIs(empty), which are defined in [DatahubTimer.h](./lib/DatahubTimer.h)
+*USER/DatahubNetwork.c* 实现了网络通信接口(目前为空), 这些接口在[DatahubNetwork.h](./include//DatahubNetwork.h)定义.
 
-*USER/main.c* contains the function main().
+*USER/DatahubTimer.c* 实现了定时器接口(目前为空), 这些接口在[DatahubTimer.h](./include/DatahubTimer.h)定义.
 
-*timer* directory contains implementations of timer for a few OSs. You can use them or implement timer yourself.
+*USER/main.c* 为程序的入口函数main()
 
-*ignore other unimportant files or directories*
+*timer* 目录包含了针对某些操作系统的定时器接口的实现. 用户可以参考其实现
 
-### ucosII directory
+### demo目录
 
-This directory contains the codes of this demo application, created by template project. It is based on LWIP-1.4.1, ucosII and STM32F4 EXPLORER.
+该demo基于LWIP-1.4.1, ucosII, 和板子STM32F4 EXPLORER
 
-#### core files and directories
+#### 核心文件和目录
 
-*DATAHUB_API* directory contains all APIs, including the network APIs user should implement.
+*DATAHUB_API*目录包含了所有的API, 包括用户需要实现的网络接口和定时器接口
 
-*DATAHUB_LIB* directory contains the static library of Dasudian C SDK.
+*DATAHUB_LIB* 目录包含了SDK静态库
 
-*demo.uvprojx* is the project file of this demo, which can be opened by keil.
+*demo.uvprojx* 是模板的工程文件(基于Keil)
 
-[DatahubNetwork.c](./ucosII/USER/DatahubNetwork.c) is the implementation of network APIs.
+[DatahubNetwork.c](./demo/USER/DatahubNetwork.c) 实现了网络通信接口
 
-[DatahubTimer.c](./ucosII/USER/DatahubTimer.c) is the implementation of timer APIs.
+[DatahubTimer.c](./demo/USER/DatahubTimer.c) 实现了定时器接口
 
-[datahub_demo.c](./ucosII/USER/datahub_demo.c) shows how to use DataHub C SDK.
+[datahub_demo.c](./demo/USER/datahub_demo.c) 向用户展示如何使用SDK
 
-[main.c](./ucosII/USER/main.c) starts this demo.
+[main.c](./demo/USER/main.c) 为程序的入口函数main()
 
-#### other files and directories
+*忽略其他目录和文件*
 
-*ucosII/CORE* contains core files to start up STM32F407ZG.
+## 编译和运行demo
 
-*ucosII/LWIP* contains source and header files of LWIP.
+编译器: keil 5.22
 
-*ucosII/LWIP_APP/* contains initialization of TCP/IP and DHCP.
+环境: windows 7 x64 Home Basic
 
-*ucosII/MALLOC* implements a memory pool.
+调试器: ST-Link
 
-*ucosII/STM32F4xx_StdPeriph_Driver* contains drivers of STM32F407ZG.
+板子: ALIENTEK的STM32F4 EXPLORER
 
-*ucosII/STM32_CONF/* contains configure files to start up STM32F407ZG.
+使用Keil打开[demo.uvprojx](./demo/demo.uvprojx)工程目录文件,直接编译下载即可. 只能在STM32F4 EXPLORER使用
 
-*ucosII/STM32F4x7_ETH_Driver* contains drivers of ethernet.
+*如果你想把该demo移植到你的板子上, 请空出时间并耐心移植*
 
-*ucosII/SYSTEM* contains an implementation of delay, initialization of system clock and serial port.
+## 如何开发自己的程序
 
-*ucosII/UCOSII* contains transplanted codes of OS 'uCOSII'.
+- 成功编译你板子的固件. 这是最基础的步骤之一.
 
-## How to compile and run this demo application
+- 移植uCOSII, FreeRTOS 或者其他的嵌入式操作系统. 这是最基础的步骤之一.
 
-Compiler: keil 5.22
+- 实现定义在[DatahubNetwork.h](./include/DatahubNetwork.h)的接口, 包括ConnectNetwork(), ucos_read(), ucos_write(), ucos_disconnect(). 这些API用于连接/断开网络及从网络中收发数据. 如果没有实现这些接口, 编译器将会报错.(demo在文件[DatahubNetwork.c](./demo/USER/DatahubNetwork.c)实现了这些接口)
 
-Environment: windows 7 x64 Home Basic
+- 实现定义在[DatahubTimer.h](./include/DatahubTimer.h)的接口, 包括InitTimer(), expired(), countdown_ms(), countdown(), left_ms(). 这些接口由SDK调用. 如果没有实现这些接口, 编译器将会报错.(demo在文件[DatahubTimer.c](./demo/USER/DatahubTimer.c)实现了这些接口)
 
-In-circuit debugger and programmer: ST-Link
+- 使用[DataHubClient.h](./include/DataHubClient.h)定义的接口连接服务器并收发数据.(demo在[datahub_demo.c](./demo/USER/datahub_demo.c)实现了这些功能)
 
-Board: STM32F4 EXPLORER from ALIENTEK
+- build工程并下载到板子中, 程序应该就能运行起来
 
-use keil to open ucosII/demo.uvprojx, build this project, and download to STM32F4 EXPLORER. It should work only on STM32F4 EXPLORER.
+## 帮助
 
-*If you want to transplant this demo to your board, you have to spend some time and have patience.*
-
-## How to develop your own application
-
-0.Compile fireware of your board successfully. It is one of the basic step.
-
-1.Transplant uCOSII, FreeRTOS or other OSs to your board successfully. It is one of the basic step.
-
-2.Implement APIs defined in file [DatahubNetwork.h](./lib/DatahubNetwork.h), including ConnectNetwork(), ucos_read(), ucos_write(), ucos_disconnect(). These APIs are used to connect/disconnect internet/Internet and send/reveive data. Without them, compilation will occur errors.(Demo implements these APIs in file [DatahubNetwork.c](./ucosII/USER/DatahubNetwork.c))
-
-3.Implement APIs defined in file [DatahubTimer.h](./lib/DatahubTimer.h), including InitTimer(), expired(), countdown_ms(), countdown(), left_ms(). These APIs are used by SDK. Without them, compilation will occur errors.(Demo implements these APIs in file [DatahubTimer.c](./ucosII/USER/DatahubTimer.c))
-
-3.Use APIs defined in file [DataHubClient.h](./lib/DataHubClient.h) to connect and send data to IoT DataHub of Dasudian.(Demo connects and sends data to IoT DataHub of Dasudian in file [datahub_demo.c](./ucosII/USER/datahub_demo.c))
-
-4.Build your project and download it to your board, your application should work now.
-
-## Q&A
-
-Q: Program stops at 'BKPT 0xAB' when debugging. Besides, when you check the calling stack, you see function _sys_open(), freopen(), _initio() and main().
-
-A: This could happen when using version 1.x.x of SDK, which uses printf() to print out debug information. This is a bug of SDK. There are two ways to solve this problem:1) update SDK to version 2.0.0. 2) rewrite function fputc() then click "Use MicroLib"(Options for Target --> Target --> Code Generation --> click "Use MicroLib")
-
-Q:
-
-...
-
-Error: L6367E: datahubclient.o attributes are not compatible with the provided attributes . Tag_CPU_arch = ARM v7E-M (=13)
-
-...
-
-A: This is because the arch of your CPU doesn't match the library. Please find the appropriate library of your CPU in [lib](./lib). If you don't find what you need, please contact us(support@dasudian.com).
-
-## Support
-
-If there are other problems or advice, Please send a email to support@dasudian.com.
+请查看[FAQ.md](./docs/FAQ.md)文档

@@ -380,9 +380,9 @@
           <GroupName>DATAHUB_LIB</GroupName>
           <Files>
             <File>
-              <FileName>dasudian-datahub-sdk-3.0.0-STM32F4.lib</FileName>
+              <FileName>dasudian-datahub-sdk-3.3.0-STM32F4.lib</FileName>
               <FileType>4</FileType>
-              <FilePath>..\..\lib\dasudian-datahub-sdk-3.0.0-STM32F4.lib</FilePath>
+              <FilePath>..\..\lib\dasudian-datahub-sdk-3.3.0-STM32F4.lib</FilePath>
             </File>
           </Files>
         </Group>

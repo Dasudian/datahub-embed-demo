@@ -2,7 +2,7 @@
 
 该项目提供一个基于嵌入式C SDK的Demo程序.
 
-本文档介绍了当前目录结构和每个文件的作用,如何编译和运行demo程序, 以及如何开发你自己的程序. 如果你想知道API的细节,请阅读API文档[API.md](./docs/API.md)或者头文件[DataHubClient.h](./include/DataHubClient.h)
+本文档介绍了当前目录结构和每个文件的作用,如何编译和运行demo程序, 以及如何开发你自己的程序. 如果你想知道API的细节,请阅读API文档[API](./docs/API.pdf)或者头文件[DataHubClient.h](./include/DataHubClient.h)
 
 ## 目录结构说明
 
@@ -10,7 +10,7 @@
 
 ### docs目录
 
-[API.md](./docs/API.md) 包含了SDK的所有API, 包括需要用户实现的网络接口和定时器接口
+[API](./docs/API.pdf) 包含了SDK的所有API, 包括需要用户实现的网络接口和定时器接口
 
 ### include目录
 
@@ -34,8 +34,6 @@
 
 *DATAHUB_API*目录包含了所有的API, 包括用户需要实现的网络接口和定时器接口
 
-*DATAHUB_LIB* 目录包含了SDK静态库
-
 *pro_template.uvprojx* 是模板的工程文件(基于Keil)
 
 *USER/DatahubNetwork.c* 实现了网络通信接口(目前为空), 这些接口在[DatahubNetwork.h](./include//DatahubNetwork.h)定义.
@@ -53,8 +51,6 @@
 #### 核心文件和目录
 
 *DATAHUB_API*目录包含了所有的API, 包括用户需要实现的网络接口和定时器接口
-
-*DATAHUB_LIB* 目录包含了SDK静态库
 
 *demo.uvprojx* 是模板的工程文件(基于Keil)
 
@@ -113,4 +109,4 @@ void datahub_printf(const char *format, ...)
 
 ## 帮助
 
-请查看[FAQ.md](./docs/FAQ.md)文档
+请查看API文档的FAQ章节

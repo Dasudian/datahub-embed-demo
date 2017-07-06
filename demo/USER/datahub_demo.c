@@ -13,9 +13,9 @@
 #include <stdarg.h>
 
 /* 发送缓冲区 */
-static unsigned char sendbuf[100];
+static unsigned char sendbuf[256];
 /* 读缓冲区 */
-static unsigned char readbuf[100];
+static unsigned char readbuf[256];
 
 /* 如何处理输出 */
 void datahub_printf(const char *format, ...)
@@ -67,10 +67,22 @@ void data_thread(void *arg)
     datahub_options options = DATAHUB_OPTIONS_INITIALIZER;
     int ret, i;
     char *topic = "embedded_topic";/* 订阅的topic */
-    char *instance_id = "your_instance_id";//请联系大数点获取
-    char *instance_key = "your_instance_key";//请联系大数点获取
-    char *client_name = "embedded_client_name";//客户端的别名
-    char *client_id = "embedded_client_id";//客户端的唯一标识符
+
+    /* instance id, 标识客户的唯一ID，请联系大数点商务
+     * support@dasudian.com获取
+     */
+    char *instance_id = "your_instance_id";
+
+    /* instance key, 与客户标识相对应的安全密钥，请联系大数点商务
+     * support@dasudian.com获取
+     */
+    char *instance_key = "your_instance_key";
+
+    /* 大数点IoT DataHub云端地址，请联系大数点商务support@dasudian.com获取 */
+    char *server_url = "www.example.com";
+
+    char *client_name = "embedded_client_name";/* 客户端的别名 */
+    char *client_id = "embedded_client_id";/* 客户端的唯一标识符 */
     Network network;
     struct self_s self;
 
@@ -79,6 +91,7 @@ void data_thread(void *arg)
     message.payload_len = sizeof("hello world");
 
     /* 设置各个选项 */
+    options.host = server_url;
     options.context = &client;
     options.message_received = onMessageReceived;
     options.connection_status_changed = connection_status_changed;
@@ -99,9 +112,9 @@ void data_thread(void *arg)
         return;
     }
 
-    /* 订阅topic */
+    /* 订阅topic, 最大以qos1的服务质量接收消息 */
     while (1) {
-        ret = datahub_subscribe(&client, topic, 10);
+        ret = datahub_subscribe(&client, topic, 1, 10);
         if (ret) {
             printf("datahub_subscribe failed:%d\r\n", ret);
             OSTimeDlyHMSM(0, 0, 2, 0);
@@ -111,24 +124,15 @@ void data_thread(void *arg)
         }
     }
 
-//    /* 取消订阅 */
-//    ret = datahub_unsubscribe(&client, topic, 10);
-//    if (ret) {
-//        printf("datahub_unsubscribe failed:%d\r\n", ret);
-//    } else {
-//        printf("datahub_unsubscribe success\r\n");
-//    }
-
     /* 发送10个QoS为0的消息(可能到达,也可能不到达) */
     for (i = 0;i < 10; i++) {
-//      while (1) {
         ret = datahub_sendrequest(&client, topic, &message, 0, 10);
         if (ret) {
             printf("datahub_publish failed:%d\r\n", ret);
         } else {
             printf("datahub_publish success\r\n");
         }
-        datahub_yield(&client, 2000);
+        OSTimeDlyHMSM(0, 0, 2, 0);
     }
 
     /* 断开连接并销毁客户端 */

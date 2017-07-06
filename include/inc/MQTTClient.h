@@ -24,16 +24,33 @@
 #define MAX_PACKET_ID 65535
 #define MAX_MESSAGE_HANDLERS 1
 
+#define DEBUG_ERROR     "error:"
+#define DEBUG_WARNING   "warning:"
+#define DEBUG_TRACE     "trace:"
+
+/* "\r\n" is the end simbol of GPS's command/data */
+#define CRLF    "\n"
+
+#define LOG(format, arg...) do{datahub_printf(format, ##arg);}while(0)
+
 enum QoS {
-	QOS0 = 0,
-	QOS1 = 1,
-	QOS2 = 2
+    QOS0 = 0,
+    QOS1 = 1,
+    QOS2 = 2,
+    QOS_NUM
 };
 
-// all failure return codes must be negative
+/* all failure return codes must be negative */
 enum mqtt_error_code_s {
-	MQTT_FAILURE = -1,
-	MQTT_SUCCESS = 0
+    MQTT_SUCCESS        = 0,
+    MQTT_FAILURE        = -1,
+    MQTT_RBUF_SHORT     = -2,
+    MQTT_WBUF_SHORT     = -3,
+    MQTT_SCONN_FAIL     = -5,
+    MQTT_SPUB_FAIL      = -6,
+    MQTT_SSUB_FAIL      = -7,
+    MQTT_SUNSUB_FAIL    = -8,
+    MQTT_TIMEOUT        = -9
 };
 
 void NewTimer(Timer*);
@@ -70,9 +87,12 @@ int MQTTUnsubscribe (Client*, const char*, int);
 int MQTTDisconnect (Client*, int timeout_ms);
 int MQTTYield (Client*, int);
 
+/* send ping packet if it's timeout */
+int MQTTKeepalive(Client *);
+
 void setDefaultMessageHandler(Client*, messageHandler);
 
-/* 
+/*
  * argument:
  *  command_timeout: ms
  *  connection_status_changed: can be NULL
@@ -85,8 +105,8 @@ struct Client {
     unsigned int next_packetid;
     unsigned int command_timeout_ms;
     size_t buf_size, readbuf_size;
-    unsigned char *buf;  
-    unsigned char *readbuf; 
+    unsigned char *buf;
+    unsigned char *readbuf;
     unsigned int keepAliveInterval;
     char ping_outstanding;
     int pingCount;// add by jack
@@ -94,14 +114,13 @@ struct Client {
 
     struct MessageHandlers
     {
-        const char* topicFilter;
         void (*fp) (void*, MessageData*);
-    } messageHandlers[MAX_MESSAGE_HANDLERS];      // Message handlers are indexed by subscription topic
+    } messageHandlers;
     /* pass to callbacks */
     void *context;
-    
+
     void (*defaultMessageHandler) (MessageData*);
-    
+
     Network* ipstack;
     Timer ping_timer;
 

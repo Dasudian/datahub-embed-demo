@@ -2,7 +2,7 @@
 
 该项目提供一个基于嵌入式C SDK的Demo程序.
 
-本文档介绍了当前目录结构和每个文件的作用,如何编译和运行demo程序, 以及如何开发你自己的程序. 如果你想知道API的细节,请阅读API文档[API](./docs/API.pdf)或者头文件[DataHubClient.h](./include/DataHubClient.h)
+本文档介绍了当前目录结构和每个文件的作用,如何编译和运行demo程序, 以及如何开发你自己的程序. 如果你想知道API的细节,请阅读docs目录下的API文档或者头文件[DataHubClient.h](./include/DataHubClient.h)
 
 ## 目录结构说明
 
@@ -10,7 +10,7 @@
 
 ### docs目录
 
-[API](./docs/API.pdf) 包含了SDK的所有API, 包括需要用户实现的网络接口和定时器接口
+API.pdf 包含了SDK的所有API, 包括需要用户实现的网络接口和定时器接口
 
 ### include目录
 

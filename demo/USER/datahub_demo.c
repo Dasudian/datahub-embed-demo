@@ -24,7 +24,7 @@ void datahub_printf(const char *format, ...)
 
     va_start(ap, format);
     /* 如果重定向了输出,可以使能该函数 */
-    vprintf(format, ap);
+//    vprintf(format, ap);
     va_end(ap);
 }
 
@@ -81,14 +81,14 @@ void data_thread(void *arg)
     /* 大数点IoT DataHub云端地址，请联系大数点商务support@dasudian.com获取 */
     char *server_url = "www.example.com";
 
-    char *client_name = "embedded_client_name";/* 客户端的别名 */
+    char *client_type = "sensor";/* 客户端的类型 */
     char *client_id = "embedded_client_id";/* 客户端的唯一标识符 */
     Network network;
     struct self_s self;
 
     /* 初始化消息 */
-    message.payload = "hello world";
-    message.payload_len = sizeof("hello world");
+    message.payload = "{\"context\":\"hello world\"}";
+    message.payload_len = strlen("{\"context\":\"hello world\"}");
 
     /* 设置各个选项 */
     options.host = server_url;
@@ -96,9 +96,9 @@ void data_thread(void *arg)
     options.message_received = onMessageReceived;
     options.connection_status_changed = connection_status_changed;
     options.sendbuf = sendbuf;
-    options.sendbuf_size = 100;
+    options.sendbuf_size = 256;
     options.readbuf = readbuf;
-    options.readbuf_size = 100;
+    options.readbuf_size = 256;
 
     /* 初始化网络 */
     self_init(&self);
@@ -106,7 +106,7 @@ void data_thread(void *arg)
     NewNetwork(&network, &self);
 
     /* 创建客户端实例 */
-    ret = datahub_create(&client, instance_id, instance_key, client_name, client_id, &network, &options);
+    ret = datahub_create(&client, instance_id, instance_key, client_type, client_id, &network, &options);
     if (ret != ERROR_NONE) {
         printf("create client failed, ret [ %d ]\r\n", ret);
         return;
@@ -126,7 +126,7 @@ void data_thread(void *arg)
 
     /* 发送10个QoS为0的消息(可能到达,也可能不到达) */
     for (i = 0;i < 10; i++) {
-        ret = datahub_sendrequest(&client, topic, &message, 0, 10);
+        ret = datahub_sendrequest(&client, topic, &message, JSON, 0, 10);
         if (ret) {
             printf("datahub_publish failed:%d\r\n", ret);
         } else {

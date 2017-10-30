@@ -146,7 +146,7 @@ typedef struct datahub_options {
      */
     unsigned char *sendbuf;
     /**
-     * @brief 发送缓冲区的大小
+     * @brief 发送缓冲区的大小, 不小于128个字节
      *
      * 必须由用户手动设置, 默认为0
      */
@@ -158,7 +158,7 @@ typedef struct datahub_options {
      */
     unsigned char *readbuf;
     /**
-     * @brief 接收缓冲区的大小
+     * @brief 接收缓冲区的大小, 不小于128个字节
      *
      * 必须由用户手动设置, 默认为0
      */
@@ -174,12 +174,25 @@ typedef struct datahub_options {
 typedef struct datahub_client {
     char *instance_id;
     char *instance_key;
-    char *client_name;
+    char *client_type;  //设备类型，如"sensor", "electricArm"
     char *client_id;
     datahub_options *options;
     Network *network;
     Client c;
 } datahub_client;
+
+/**
+ * 数据类型
+ */
+typedef enum datahub_data_type_s {
+    /** 数据为JSON格式 */
+    JSON = 0,
+    /** 数据为文本/字符串 */
+    TEXT = 1,
+    /** 数据为二进制 */
+    BINARY = 2,
+    DATA_TYPE_END
+}datahub_data_type;
 
 /**
  * @brief 该函数创建一个客户端实例,该实例可用于连接大数点MQTT服务器
@@ -190,8 +203,9 @@ typedef struct datahub_client {
  * 注意: 不能为空<br>
  * @param instance_key 用于连接大数点服务器的密码,由大数点提供<br>
  * 注意: 不能为空<br>
- * @param client_name 设备的名字<br>
- * 注意: 不能为空<br>
+ * @param client_type 设备类型. 如传感器"sensor", 充电桩"charging_pile",
+ * 车载电池"car_battery"<br>
+ * 注意:可以为空<br>
  * @param client_id 设备的id<br>
  * 注意: 不能为空<br>
  * @param network 网络接口,由用户实现网络数据的收发,SDK会调用这些函数<br>
@@ -202,7 +216,7 @@ typedef struct datahub_client {
  * 错误码请查看开发文档<br>
  */
 int datahub_create(datahub_client *client, char *instance_id,
-        char *instance_key, char *client_name, char *client_id,
+        char *instance_key, char *client_type, char *client_id,
         Network *network, datahub_options *options);
 
 /**
@@ -215,6 +229,7 @@ int datahub_create(datahub_client *client, char *instance_id,
  * 注意: 不能为空<br>
  * @param message 发送的消息<br>
  * 注意: 不能为空<br>
+ * @param data_type 数据类型，只能为JSON或TEXT或BINARY
  * @param qos 消息的服务质量<br>
  * <b>0</b>: 消息可能到达,也可能不到达<br>
  * <b>1</b>: 消息一定会到达,但可能会重复,当然,前提是返回ERROR_NONE<br>
@@ -226,7 +241,8 @@ int datahub_create(datahub_client *client, char *instance_id,
  *
  */
 int datahub_sendrequest(datahub_client *client, char *topic,
-        datahub_message *message, int qos, int timeout);
+        datahub_message *message, datahub_data_type data_type,
+        int qos, int timeout);
 
 /**
  * @brief 同步订阅主题
@@ -319,7 +335,13 @@ enum datahub_error_code_s {
     /** 超时 */
     ERROR_TIMEOUT = -12,
     /** 非法的选项 */
-    ERROR_ILLEGAL_OPTION = -200
+    ERROR_ILLEGAL_OPTION = -200,
+    /** 主题过长 */
+    ERROR_TOPIC_TOO_LONG = -201,
+    /** 不合法的JSON字符串 */
+    ERROR_MESSAGE_INVALID_JSON = -202,
+    /** 不合法的设备类型字符;设备类型不能包含竖线"|", 也不能以下划线"_"开头，且长度不能超过32个字节 */
+    ERROR_INVALID_CLIENT_TYPE = -203
 };
 
 #endif

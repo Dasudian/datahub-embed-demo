@@ -80,8 +80,7 @@ typedef struct Client Client;
 /* timeout: ms */
 int MQTTConnect (Client*, MQTTPacket_connectData*, int timeout_ms);
 int MQTTPublish (Client* c, const char* topicName, MQTTMessage* message, unsigned int timeout_ms);
-/* messageHandler can be NULL */
-int MQTTSubscribe (Client*, const char*, enum QoS, int,messageHandler);
+int MQTTSubscribe (Client*, const char*, enum QoS, int);
 int MQTTUnsubscribe (Client*, const char*, int);
 /* timeout: ms  */
 int MQTTDisconnect (Client*, int timeout_ms);
@@ -98,8 +97,10 @@ void setDefaultMessageHandler(Client*, messageHandler);
  *  connection_status_changed: can be NULL
  */
 
-void MQTTClient(Client*, Network*, unsigned int, unsigned char*, size_t, unsigned char*, size_t, void *context,
-        void (*connection_status_changed)(void *context, int isconnected));
+void MQTTClient(Client*, Network*, unsigned int, unsigned char*, size_t,
+        unsigned char*, size_t, void *context,
+        void (*connection_status_changed)(void *context, int isconnected),
+        void (*fp)(void *, MessageData *));
 
 struct Client {
     unsigned int next_packetid;

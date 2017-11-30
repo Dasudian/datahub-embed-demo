@@ -1,1 +1,1 @@
-由于SDK库较大, 我们并未上传至github.com. 最新版本为3.3.0. 下载地址 http://downloads.dasudian.net/sdk/datahub/embedc/datahub-embedded-sdk-04.00.00.zip
+由于SDK库较大, 我们并未上传至github.com. 最新版本为04.00.00. 下载地址 http://downloads.dasudian.net/sdk/datahub/embedc/datahub-embedded-sdk-04.00.00.zip
